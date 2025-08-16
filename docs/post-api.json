@@ -1,0 +1,529 @@
+{
+    "openapi": "3.1.1",
+    "info": {
+        "title": "Post API",
+        "version": "1.0",
+        "description": "API for manage post in Blog application."
+    },
+    "servers": [{ "url": "http://localhost:8000" }],
+    "paths": {
+        "/api/post": {
+            "get": {
+                "description": "Get list or search post",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "name": "author",
+                        "in": "query"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query"
+                    },
+                    {
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "name": "slug",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get all or search post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "content": {
+                                                        "type": "string"
+                                                    },
+                                                    "category_id": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "data": [
+                                                {
+                                                    "id": 1,
+                                                    "title": "olahraga di kota Jakarta",
+                                                    "slug": "olahraga-di-kota-jakarta",
+                                                    "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                                    "category_id": 1,
+                                                    "author_id": 1
+                                                },
+                                                {
+                                                    "id": 2,
+                                                    "title": "kesenian di kota Jakarta",
+                                                    "slug": "kesenian-di-kota-jakarta",
+                                                    "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                                    "category_id": 1,
+                                                    "author_id": 1
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": {
+                                                "messages": ["unauthorized"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "post": {
+                "description": "Create new post",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": ["title", "slug", "content"],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "category_id": {
+                                        "type": "number"
+                                    },
+                                    "author_id": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "Kesenian": {
+                                    "value": {
+                                        "title": "Kesenian di kota Jakarta",
+                                        "slug": "kesenian-di-kota-jakarta",
+                                        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                        "category_id": 1,
+                                        "author_id": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create new post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "slug": {
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                },
+                                                "category_id": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "title": "Kesenian di kota Jakarta",
+                                                "slug": "kesenian-di-kota-jakarta",
+                                                "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                                "category_id": 1,
+                                                "author_id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validation errors": {
+                                        "value": {
+                                            "errors": {
+                                                "title": [
+                                                    "title must not be blank",
+                                                    "title min 6 characters"
+                                                ],
+                                                "slug": [
+                                                    "slug must not be blank",
+                                                    "slug min 6 characters"
+                                                ],
+                                                "content": [
+                                                    "content must not be blank",
+                                                    "content min 6 characters"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": {
+                                                "messages": ["unauthorized"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        "/api/post/{postId}": {
+            "patch": {
+                "description": "Update post by id",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    },
+                                    "category_id": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "examples": {
+                                "success": {
+                                    "value": {
+                                        "id": 1,
+                                        "title": "olahraga di kota Jakarta",
+                                        "slug": "olahraga-di-kota-jakarta",
+                                        "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                        "category_id": 1,
+                                        "author_id": 1
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "slug": {
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                },
+                                                "category_id": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "title": "olahraga di kota Jakarta",
+                                                "slug": "olahraga-di-kota-jakarta",
+                                                "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                                "category_id": 1,
+                                                "author_id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validation errors": {
+                                        "value": {
+                                            "errors": {
+                                                "title": [
+                                                    "title must not be blank",
+                                                    "title min 6 characters"
+                                                ],
+                                                "slug": [
+                                                    "slug must not be blank",
+                                                    "slug min 6 characters"
+                                                ],
+                                                "content": [
+                                                    "content must not be blank",
+                                                    "content min 6 characters"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": {
+                                                "messages": ["unauthorized"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "get": {
+                "description": "Get detail post",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success get detail post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "slug": {
+                                                    "type": "string"
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                },
+                                                "category_id": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "success": {
+                                        "value": {
+                                            "data": {
+                                                "id": 1,
+                                                "title": "olahraga di kota Jakarta",
+                                                "slug": "olahraga-di-kota-jakarta",
+                                                "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
+                                                "category_id": 1,
+                                                "author_id": 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": {
+                                                "messages": ["unauthorized"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+            "delete": {
+                "description": "Delete post by id",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success delete post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": {
+                                                "messages": ["unauthorized"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
