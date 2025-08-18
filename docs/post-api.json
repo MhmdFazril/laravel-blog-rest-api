@@ -253,9 +253,9 @@
             }
         },
 
-        "/api/post/{postId}": {
+        "/api/post/{slug}": {
             "patch": {
-                "description": "Update post by id",
+                "description": "Update post by slug",
                 "parameters": [
                     {
                         "name": "Authorization",
@@ -263,7 +263,7 @@
                         "required": true
                     },
                     {
-                        "name": "postId",
+                        "name": "slug",
                         "in": "path",
                         "required": true
                     }
@@ -275,9 +275,6 @@
                                 "type": "object",
                                 "properties": {
                                     "title": {
-                                        "type": "string"
-                                    },
-                                    "slug": {
                                         "type": "string"
                                     },
                                     "content": {
@@ -293,7 +290,6 @@
                                     "value": {
                                         "id": 1,
                                         "title": "olahraga di kota Jakarta",
-                                        "slug": "olahraga-di-kota-jakarta",
                                         "content": "Lorem ipsum dolor sit amet consectetur adipiscing elit orci curae enim pharetra vehicula, aliquam porttitor mus nisi ne.",
                                         "category_id": 1,
                                         "author_id": 1
@@ -397,7 +393,7 @@
             },
 
             "get": {
-                "description": "Get detail post",
+                "description": "Get detail post by slug",
                 "parameters": [
                     {
                         "name": "Authorization",
@@ -405,7 +401,7 @@
                         "required": true
                     },
                     {
-                        "name": "postId",
+                        "name": "slug",
                         "in": "path",
                         "required": true
                     }
@@ -477,7 +473,7 @@
             },
 
             "delete": {
-                "description": "Delete post by id",
+                "description": "Delete post by slug",
                 "parameters": [
                     {
                         "name": "Authorization",
@@ -485,7 +481,7 @@
                         "required": true
                     },
                     {
-                        "name": "postId",
+                        "name": "slug",
                         "in": "path",
                         "required": true
                     }
