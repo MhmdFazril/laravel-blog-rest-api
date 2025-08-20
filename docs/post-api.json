@@ -60,6 +60,9 @@
                                                     },
                                                     "category_id": {
                                                         "type": "number"
+                                                    },
+                                                    "author_id": {
+                                                        "type": "number"
                                                     }
                                                 }
                                             }
