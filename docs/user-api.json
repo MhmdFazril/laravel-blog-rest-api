@@ -214,6 +214,25 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Login failed",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "validation errors": {
+                                        "description": "Login failed",
+                                        "value": {
+                                            "errors": {
+                                                "messages": [
+                                                    "Username or Password Wrong"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
