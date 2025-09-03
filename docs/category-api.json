@@ -275,6 +275,20 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Unauthorized": {
+                                        "value": {
+                                            "errors": ["category not found"]
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
