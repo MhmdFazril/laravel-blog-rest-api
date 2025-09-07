@@ -129,12 +129,9 @@
                         "application/json": {
                             "schema": {
                                 "type": "object",
-                                "required": ["title", "slug", "content"],
+                                "required": ["title", "content", "category_id"],
                                 "properties": {
                                     "title": {
-                                        "type": "string"
-                                    },
-                                    "slug": {
                                         "type": "string"
                                     },
                                     "content": {
@@ -386,6 +383,22 @@
                                             "errors": {
                                                 "messages": ["unauthorized"]
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "Forbidden": {
+                                        "value": {
+                                            "errors": [
+                                                "Forbidden: Not the author of this post."
+                                            ]
                                         }
                                     }
                                 }

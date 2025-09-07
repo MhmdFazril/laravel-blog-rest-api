@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -18,4 +19,9 @@ Route::middleware(AuthMiddleware::class)->group(function () {
   Route::get('/category/{slug}', [CategoryController::class, 'show']);
   Route::put('/category/{slug}', [CategoryController::class, 'update']);
   Route::delete('/category/{slug}', [CategoryController::class, 'delete']);
+
+  Route::post('/post', [PostController::class, 'create']);
+  Route::patch('/post/{slug}', [PostController::class, 'update']);
+  Route::get('/post/{slug}', [PostController::class, 'show']);
+  Route::delete('/post/{slug}', [PostController::class, 'delete']);
 });

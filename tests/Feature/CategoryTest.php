@@ -275,6 +275,10 @@ test('List category success', function () {
                     "slug" => "kesehatan"
                 ],
                 [
+                    "name" => "Masak",
+                    "slug" => "masak"
+                ],
+                [
                     "name" => "Pendidikan",
                     "slug" => "pendidikan"
                 ],

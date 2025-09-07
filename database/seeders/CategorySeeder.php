@@ -37,5 +37,10 @@ class CategorySeeder extends Seeder
             'name' => 'Pendidikan',
             'slug' => 'pendidikan',
         ]);
+
+        Category::create([
+            'name' => 'Masak',
+            'slug' => 'masak',
+        ]);
     }
 }
