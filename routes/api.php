@@ -21,6 +21,7 @@ Route::middleware(AuthMiddleware::class)->group(function () {
   Route::delete('/category/{slug}', [CategoryController::class, 'delete']);
 
   Route::post('/post', [PostController::class, 'create']);
+  Route::get('/post', [PostController::class, 'listSearch']);
   Route::patch('/post/{slug}', [PostController::class, 'update']);
   Route::get('/post/{slug}', [PostController::class, 'show']);
   Route::delete('/post/{slug}', [PostController::class, 'delete']);

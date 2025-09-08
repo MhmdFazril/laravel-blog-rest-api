@@ -5,8 +5,11 @@ use App\Models\User;
 use App\Models\Category;
 use Database\Seeders\PostSeeder;
 use Database\Seeders\UserSeeder;
+use Illuminate\Support\Facades\Log;
+
 use Database\Seeders\CategorySeeder;
 
+use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertNotEquals;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -229,4 +232,124 @@ test('Delete post not found', function () {
 				'post not found'
 			]
 		]);
+});
+
+
+
+// =========== list and search detail post ===========
+test('List all post', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(5, count($response['data']));
+	assertEquals(5, $response['meta']['total']);
+});
+
+test('Search post by title', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?title=daging', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(1, count($response['data']));
+	assertEquals(1, $response['meta']['total']);
+});
+
+test('Search post by author', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?author=user2', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(4, count($response['data']));
+	assertEquals(4, $response['meta']['total']);
+});
+
+test('Search post by slug', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?slug=-darah', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(1, count($response['data']));
+	assertEquals(1, $response['meta']['total']);
+});
+
+test('Search post by category', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?category=pendidikan', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(3, count($response['data']));
+	assertEquals(3, $response['meta']['total']);
+});
+
+test('Search post by category and title', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?category=pendidikan&title=olahraga', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(1, count($response['data']));
+	assertEquals(1, $response['meta']['total']);
+});
+
+test('Search post not found', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?title=basket', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	// Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(0, count($response['data']));
+	assertEquals(0, $response['meta']['total']);
+});
+
+test('Search post size', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?size=2', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(2, count($response['data']));
+	assertEquals(5, $response['meta']['total']);
+});
+
+test('Search post size and page', function () {
+	$this->seed([UserSeeder::class, CategorySeeder::class, PostSeeder::class]);
+
+	$response = $this->get('/api/post?size=2&page=3', [
+		'Authorization' => 'token'
+	])->assertStatus(200)
+		->json();
+
+	Log::info(json_encode($response, JSON_PRETTY_PRINT));
+	assertEquals(1, count($response['data']));
+	assertEquals(5, $response['meta']['total']);
 });

@@ -29,5 +29,29 @@ class PostSeeder extends Seeder
             'category_id' => Category::where('slug', 'masak')->first()->id,
             'author_id' => User::where('username', 'user')->first()->id,
         ]);
+
+        Post::create([
+            'title' => 'Revolusi Pracis',
+            'slug' => 'revolusi-prancis',
+            'content' => 'Revolusi Prancis (1789–1799) adalah perubahan sosial dan politik besar di Prancis yang menggulingkan monarki absolut dan feodalisme. Dipicu oleh krisis ekonomi, ketimpangan sosial, dan pengaruh pemikiran Pencerahan, rakyat bangkit melawan kekuasaan Raja Louis XVI. Revolusi ini ditandai dengan peristiwa penting seperti penyerbuan Penjara Bastille, deklarasi Hak Asasi Manusia dan Warga Negara, serta eksekusi raja dan ratu. Revolusi mengakhiri kekuasaan bangsawan, membawa ide-ide kebebasan, kesetaraan, dan demokrasi, serta membuka jalan bagi munculnya Napoleon Bonaparte.',
+            'category_id' => Category::where('slug', 'pendidikan')->first()->id,
+            'author_id' => User::where('username', 'user2')->first()->id,
+        ]);
+
+        Post::create([
+            'title' => 'Apa Itu Olahraga Padel',
+            'slug' => 'apa-itu-olahraga-padel',
+            'content' => 'Padel adalah olahraga raket yang menggabungkan elemen tenis dan squash, dimainkan di lapangan berdinding yang lebih kecil dari lapangan tenis. Olahraga ini dimainkan secara ganda (dua lawan dua) dan menggunakan raket padel khusus (tanpa senar) serta bola yang mirip bola tenis, tetapi dengan tekanan udara yang lebih rendah.',
+            'category_id' => Category::where('slug', 'pendidikan')->first()->id,
+            'author_id' => User::where('username', 'user2')->first()->id,
+        ]);
+
+        Post::create([
+            'title' => 'Cuci Darah ',
+            'slug' => 'cuci-darah',
+            'content' => 'Cuci darah, atau dalam istilah medis disebut hemodialisis, adalah prosedur yang dilakukan untuk menggantikan fungsi ginjal yang rusak atau tidak lagi bekerja secara normal. Proses ini bertujuan untuk membersihkan darah dari zat-zat sisa metabolisme, kelebihan cairan, dan racun yang seharusnya dibuang oleh ginjal.',
+            'category_id' => Category::where('slug', 'kesehatan')->first()->id,
+            'author_id' => User::where('username', 'user2')->first()->id,
+        ]);
     }
 }

@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Requests\PostUpdateRequest;
+use App\Http\Resources\PostResourceColl;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
@@ -95,5 +97,35 @@ class PostController extends Controller
         return response()->json([
             'data' => true
         ]);
+    }
+
+    public function listSearch(Request $request): PostResourceColl
+    {
+        $page = $request->input('page', 1);
+        $size = $request->input('size', 10);
+
+        $posts = Post::query()->select('posts.*')
+            ->leftJoin('users', 'posts.author_id', '=', 'users.id')
+            ->leftJoin('categories', 'posts.category_id', '=', 'categories.id');
+
+        if ($request->has('author')) {
+            $posts->where('users.name', 'LIKE', '%' . $request->input('author') . '%');
+        }
+
+        if ($request->has('category')) {
+            $posts->where('categories.name', 'LIKE', '%' . $request->input('category') . '%');
+        }
+
+        if ($request->has('title')) {
+            $posts->where('posts.title', 'like', '%' . $request->input('title') . '%');
+        }
+
+        if ($request->has('slug')) {
+            $posts->where('posts.slug', 'like', '%' . $request->input('slug') . '%');
+        }
+
+        $posts = $posts->paginate(perPage: $size, page: $page);
+
+        return new PostResourceColl($posts);
     }
 }
